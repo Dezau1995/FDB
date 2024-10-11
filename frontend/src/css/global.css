@@ -1,0 +1,23 @@
+@font-face {
+  font-family: Luckiest-Guy;
+  font-weight: 400;
+  font-style: normal;
+  src: url('../assets/fonts/Luckiest_Guy/LuckiestGuy-Regular.ttf');
+}
+
+:root {
+  --title-font: Luckiest-Guy;
+}
+
+body {
+  background-color: #2D2D2D;
+  color: #F0F0F0;
+}
+
+h1 {
+  font-family: var(--title-font);
+}
+
+@media (min-width: 1024px) {
+
+}

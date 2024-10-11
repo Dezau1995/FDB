@@ -1,0 +1,18 @@
+GET http://localhost:3001/exercices/
+
+###
+GET http://localhost:3001/exercices/1
+
+###
+POST http://localhost:3001/exercices/
+Content-Type: application/json
+
+{
+  "name": "Squat",
+  "description": "Lorem Ipsum",
+  "difficulty": "Easy",
+  "time": "15 min",
+  "equipement": "",
+  "repetitions": "4 x 12",
+  "createdAt": "maintenant"
+}

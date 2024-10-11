@@ -1,0 +1,9 @@
+GET http://localhost:3001/categories/
+
+###
+POST http://localhost:3001/categories/
+Content-Type: application/json
+
+{
+  "name": "Cardio"
+}
