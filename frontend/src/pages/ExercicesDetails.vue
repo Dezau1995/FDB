@@ -1,7 +1,9 @@
 <template>
   <section class="display-exercice-page">
+    <button class="btn-trash">
+      <img class="icon-trash" src="../assets/icon-trash.png" alt="trash">
+    </button>
     <form @submit="handleSubmit" class="display-exercice-details-form">
-    <!-- <section v-for="exerciceDetail in exerciceDetailsData" :key="exerciceDetail.id" class="display-exercice-details-form"> -->
       <h1 v-if="!edit">{{ exerciceDetailsData.name }}</h1>
       <label v-else>
         Nom de l'exercice :
@@ -27,8 +29,7 @@
         Nombre de répétitions :
         <input type="text" :value="exerciceDetailsData.repetitions" name="repetitions">
       </label>
-    <!-- </section> -->
-  <button type="submit" v-if="edit">{{ btnValue }}</button>
+    <button type="submit" v-if="edit">{{ btnValue }}</button>
   </form>
   <button type="button" @click="handleBtnValue" v-if="!edit">{{btnValue}}</button>
 </section>
@@ -61,7 +62,6 @@ setup () {
       const response = await axios.get(`http://localhost:3001/exercices/${exerciceId}`)
       if(response.status === 200) {
         exerciceDetailsData.value = response.data;
-        console.log( "ICI" ,response.data)
       } else {
         console.error('Erreur dans la réponse', response.status);
       }
@@ -114,6 +114,22 @@ setup () {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.btn-trash {
+  position: fixed;
+  /* top: 0; */
+  right: 5%;
+  background-color: transparent;
+  border: none;
+  color: none;
+  width: 10%;
+  cursor: pointer;
+}
+
+.icon-trash {
+  width: 100%;
+  color: white;
 }
 
 .display-exercice-details-form {

@@ -86,20 +86,20 @@ export default {
 <style>
 .display-modal-add-exercice {
   position: fixed;
-    overflow: hidden;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    top: 10%;
-    /* width: 100vw; */
-    height: 60vh;
-    padding: 1.5rem;
-    color: #2D2D2D;
-    background-color: #F0F0F0;
-    box-shadow: var(--secondary-color) 0 0 10px 0;
-    z-index: 9999;
-    border-radius: 10px;
+  overflow: hidden;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  top: 10%;
+  /* width: 100vw; */
+  height: 60vh;
+  padding: 1.5rem;
+  color: #2D2D2D;
+  background-color: #F0F0F0;
+  box-shadow: var(--secondary-color) 0 0 10px 0;
+  z-index: 9999;
+  border-radius: 10px;
 }
 
 .close-form-modal {

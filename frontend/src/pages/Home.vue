@@ -3,7 +3,7 @@
     <h1>Exos du jour</h1>
     <section >
       <ul class="display-exercices">
-        <li v-for="exercice in exercicesData" :key="exercice.id" @click="navigateToExerciceDetails(exercice.id)">{{ exercice.name }}</li>
+        <li class="exercice-list" v-for="exercice in exercicesData" :key="exercice.id" @click="navigateToExerciceDetails(exercice.id)">{{ exercice.name }}</li>
       </ul>
     </section>
     <button @click="handleOpenModal">Créer un exercice</button>
@@ -75,4 +75,10 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.exercice-list {
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 1rem;
+  }
 </style>
