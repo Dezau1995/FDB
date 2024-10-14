@@ -30,3 +30,7 @@ Content-Type: application/json
   "createdAt": "maintenant",
   "categoryId": 3
 }
+
+###
+
+DELETE http://localhost:3001/exercices/7

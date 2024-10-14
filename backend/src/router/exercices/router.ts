@@ -94,4 +94,17 @@ exercicesRouter.put("/:id", async (req, res) => {
   };
 });
 
+exercicesRouter.delete("/:id", async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const exercice = await Exercices.findOne({where : {id}});
+    if(exercice !== null) {
+      exercice.remove();
+    }
+    res.status(200).send("OK");
+  } catch (error) {
+    res.status(500).send(error);
+  };
+});
+
 export default exercicesRouter;

@@ -1,6 +1,6 @@
 <template>
   <section class="display-exercice-page">
-    <button class="btn-trash">
+    <button class="btn-trash" @click="handleDelete">
       <img class="icon-trash" src="../assets/icon-trash.png" alt="trash">
     </button>
     <form @submit="handleSubmit" class="display-exercice-details-form">
@@ -93,6 +93,11 @@ setup () {
     }
   };
 
+  const handleDelete = async () => {
+    await axios.delete(`http://localhost:3001/exercices/${exerciceId}`)
+    navigate("/")
+  }
+
   onMounted(() => {
     fetchData()
   });
@@ -104,6 +109,7 @@ setup () {
     exerciceDetailsData,
     error,
     handleSubmit,
+    handleDelete,
   }
 }
 }
