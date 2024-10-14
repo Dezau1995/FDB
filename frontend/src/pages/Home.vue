@@ -1,8 +1,8 @@
 <template>
-  <main>
+  <main class="display-home-page">
     <h1>Exos du jour</h1>
-    <section>
-      <ul>
+    <section >
+      <ul class="display-exercices">
         <li v-for="exercice in exercicesData" :key="exercice.id" @click="navigateToExerciceDetails(exercice.id)">{{ exercice.name }}</li>
       </ul>
     </section>
@@ -62,3 +62,17 @@ export default {
   },
 };
 </script>
+
+<style>
+.display-home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.display-exercices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>

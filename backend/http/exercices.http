@@ -8,11 +8,25 @@ POST http://localhost:3001/exercices/
 Content-Type: application/json
 
 {
-  "name": "Squat",
+  "name": "Bras",
+  "description": "Lorem Ipsum",
+  "difficulty": "Medium",
+  "time": "30 min",
+  "repetitions": "4 x 15",
+  "createdAt": "maintenant",
+  "categoryId": 2
+}
+
+### 
+PUT http://localhost:3001/exercices/3
+Content-Type: application/json
+
+{
+  "name": "Abdos",
   "description": "Lorem Ipsum",
   "difficulty": "Easy",
-  "time": "15 min",
-  "equipement": "",
-  "repetitions": "4 x 12",
-  "createdAt": "maintenant"
+  "time": "20 min",
+  "repetitions": "4 x 15",
+  "createdAt": "maintenant",
+  "categoryId": 3
 }

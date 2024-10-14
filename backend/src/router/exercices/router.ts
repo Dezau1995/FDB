@@ -35,18 +35,17 @@ exercicesRouter.get("/:id", async (req, res) => {
 
 exercicesRouter.post("/", async (req, res) => {
   const {
-    name, description, difficulty, time, equipement, repetitions, createdAt, categoryId
+    name, description, difficulty, time, repetitions, createdAt, categoryId
   } = req.body;
   try {
     const exercice = new Exercices();
-    const category = await Category.find({ where: { id: categoryId }});
+    const [category] = await Category.find({ where: { id: categoryId }});
     if(category) exercice.category = category;
 
     exercice.name = name;
     exercice.description = description;
     exercice.difficulty = difficulty;
     exercice.time = time;
-    exercice.equipement = equipement;
     exercice.repetitions = repetitions;
     exercice.createdAt = createdAt;
 
@@ -60,6 +59,39 @@ exercicesRouter.post("/", async (req, res) => {
     } catch (error) {
     return res.status(500).send(error);
   }
+});
+
+exercicesRouter.put("/:id", async (req, res) => {
+  const {
+    name, description, difficulty, time, repetitions, createdAt, categoryId
+  } = req.body;
+  try {
+    const id = parseInt(req.params.id);
+    const exercice = await Exercices.findOne({
+      relations: {
+        category: true,
+      },
+      where: {id},
+    });
+    if (exercice !== null) {
+      exercice.name = name;
+      exercice.description = description;
+      exercice.difficulty = difficulty;
+      exercice.time = time;
+      exercice.repetitions = repetitions;
+      exercice.createdAt= createdAt;
+  
+      if (categoryId) {
+        const [category] = await Category.find({ where: {id: categoryId}});
+        if (category) exercice.category = category;
+      }
+  
+      await exercice.save();
+    }
+    res.status(200).send(exercice);
+  } catch (error) {
+    return res.status(500).send(error);
+  };
 });
 
 export default exercicesRouter;

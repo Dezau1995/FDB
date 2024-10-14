@@ -1,8 +1,7 @@
 import {
   BaseEntity,
   Column, Entity,
-  JoinTable,
-  ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn
 } from "typeorm";
 import { Category } from "./Category";
@@ -25,15 +24,11 @@ export class Exercices extends BaseEntity {
   time!: string;
 
   @Column()
-  equipement!: string;
-
-  @Column()
   repetitions!: string;
 
   @Column()
   createdAt!: string;
 
-  @ManyToMany(() => Category)
-  @JoinTable()
-  category!: Category[]
+  @ManyToOne(() => Category, category => category.exercice)
+  category!: Category;
 }
