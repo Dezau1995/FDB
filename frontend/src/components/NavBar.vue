@@ -33,6 +33,8 @@ export default {
 
 <style>
   .navigation-bar {
+    position: fixed;
+    bottom: 0;
     display: flex;
     justify-content: space-between;
     padding: 2rem;

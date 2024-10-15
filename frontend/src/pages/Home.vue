@@ -6,7 +6,7 @@
         <exercice-card :id="exercice.id" :name="exercice.name" :difficulty="exercice.difficulty"/>
       </router-link>
       </section>
-    <button @click="handleOpenModal">Créer un exercice</button>
+    <button @click="handleOpenModal">Ajouter un exercice</button>
     <modal-add-exercice-form 
       :isOpen="openModalAddExercice" 
       @close="openModalAddExercice = false" 
@@ -71,12 +71,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 1rem 0.5rem;
 }
 
 .display-exercices {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
 }
 
  .router-link {
