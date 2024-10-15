@@ -38,7 +38,7 @@
 <script>
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
@@ -48,6 +48,7 @@ setup () {
   const error = ref(null);
   const exerciceDetailsData = ref({});
   const route = useRoute();
+  const router = useRouter();
   const exerciceId = route.params.exerciceId;
   const edit = ref(false);
   const btnValue = ref("Éditer");
@@ -95,7 +96,7 @@ setup () {
 
   const handleDelete = async () => {
     await axios.delete(`http://localhost:3001/exercices/${exerciceId}`)
-    navigate("/")
+    router.push("/")
   }
 
   onMounted(() => {
