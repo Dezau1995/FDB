@@ -1,11 +1,11 @@
 <template>
   <main class="display-home-page">
     <h1>Exos du jour</h1>
-    <section >
-      <ul class="display-exercices">
-        <li class="exercice-list" v-for="exercice in exercicesData" :key="exercice.id" @click="navigateToExerciceDetails(exercice.id)">{{ exercice.name }}</li>
-      </ul>
-    </section>
+    <section class="display-exercices">
+      <router-link class="router-link" v-for="exercice in exercicesData" :key="exercice.id" :to="`/${exercice.id}`">
+        <exercice-card :id="exercice.id" :name="exercice.name" :difficulty="exercice.difficulty"/>
+      </router-link>
+      </section>
     <button @click="handleOpenModal">Créer un exercice</button>
     <modal-add-exercice-form 
       :isOpen="openModalAddExercice" 
@@ -19,11 +19,13 @@ import axios from 'axios';
 import { ref, onMounted, onUpdated } from 'vue';
 import { useRouter } from 'vue-router';
 import ModalAddExerciceForm from '../components/ModalAddExerciceForm.vue';
+import ExerciceCard from '../components/ExerciceCard.vue';
 
 export default {
   name: "home-pages",
   components: {
     ModalAddExerciceForm,
+    ExerciceCard,
   },
   setup() {
     const exercicesData = ref([]);
@@ -55,13 +57,10 @@ export default {
       openModalAddExercice.value = true;
     };
 
-    const navigateToExerciceDetails = (exerciceId) => router.push(`/${exerciceId}`)
-
     return {
       exercicesData,
       openModalAddExercice,
       handleOpenModal,
-      navigateToExerciceDetails
     };
   },
 };
@@ -80,9 +79,8 @@ export default {
   justify-content: center;
 }
 
-.exercice-list {
-    border: 1px solid white;
-    border-radius: 10px;
-    padding: 1rem;
-  }
+ .router-link {
+ text-decoration: none;
+ color: inherit;
+}
 </style>

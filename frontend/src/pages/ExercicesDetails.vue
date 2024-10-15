@@ -125,7 +125,6 @@ setup () {
 
 .btn-trash {
   position: fixed;
-  /* top: 0; */
   right: 5%;
   background-color: transparent;
   border: none;
