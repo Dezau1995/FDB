@@ -77,7 +77,8 @@ setup () {
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
     try {
-      await axios.put(`http://localhost:3001/exercices/${exerciceId}`, formJson);
+      await axios.put(`http://localhost:3
+      001/exercices/${exerciceId}`, formJson);
       edit.value = false;
       btnValue.value = "Éditer";
       toast.success("Vos modifications ont bien été prises en compte !", {
