@@ -1,14 +1,8 @@
 <template>
-  <section>
-    <header>
-    <nav-bar/>
-  </header>
-
   <main>
-    <h1></h1>
     <router-view />
+    <nav-bar/>
   </main>
-</section>
 </template>
 
 <script>
@@ -26,14 +20,15 @@ export default {
     };
 },
 };
-
-
-
 </script>
 
 <style>
 @import './css/global.css';
 @import './css/reset.css';
+
+main {
+  margin: 1rem 0.5rem;
+}
 
 .logo {
   cursor: pointer;

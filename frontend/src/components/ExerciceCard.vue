@@ -2,6 +2,7 @@
   <section class="display-exercices-card">
     <h1>{{ name }}</h1>
     <p>{{ difficulty }}</p>
+    <p>{{ category }}</p>
   </section>
 </template>
 
@@ -11,6 +12,7 @@ export default {
     id: { type: Number, required: true},
     name : { type: String, required: true },
     difficulty: { type: String, required: true},
+    category: { type: String, required: true},
   },
   setup () {
     return {

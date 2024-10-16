@@ -44,6 +44,16 @@
         <input type="text" name="createdAt" />
       </label>
     </div>
+    <div class="input-container">
+      <label> Catégorie
+      <select name="categories" id="categories-select">
+        <option value="">--Choissez une catégorie--</option>
+        <option v-for="category in categoriesData" :key="category.id" :value="category.name">
+      {{ category.name }}
+        </option>
+      </select>
+    </label>
+    </div>
       <button class="btn-add-exercice">Ajouter l'exercice !</button>
     </form>
   </dialog>
@@ -51,6 +61,7 @@
 
 <script>
 import axios from 'axios';
+import { onMounted, ref } from 'vue';
 
 export default {
   name: 'add-exercice',
@@ -59,6 +70,9 @@ export default {
   },
   emits: ['close'],
   setup(_, { emit }) {
+    const error = ref(null);
+    const categoriesData = ref([]);
+
     const handleSubmit = (e) => {
       e.preventDefault();
       const form = e.target;
@@ -71,6 +85,23 @@ export default {
         });
     };
 
+    const fetchData = async () => {
+      try {
+       const response = await axios.get(`http://localhost:3001/categories/`);
+       if (response.status === 200) {
+        categoriesData.value = response.data; 
+        } else {
+           console.error('Erreur dans la réponse', response.status);
+        }
+      } catch (error) {
+        error.value = 'Erreur lors de la récupération des données';
+      }
+    };
+
+    onMounted(() => {
+      fetchData();
+    });
+
     const closeModal = () => {
       emit('close');
     };
@@ -78,6 +109,8 @@ export default {
     return {
       handleSubmit,
       closeModal,
+      categoriesData,
+      error
     };
   }
 }
@@ -92,7 +125,6 @@ export default {
   flex-direction: column;
   justify-content: space-evenly;
   top: 10%;
-  /* width: 100vw; */
   height: 60vh;
   padding: 1.5rem;
   color: #2D2D2D;

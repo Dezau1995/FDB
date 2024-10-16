@@ -1,7 +1,9 @@
 <template>
-  <section class="navigation-bar">
-    <img @click="homePageNavigation()" class="logo" src="../assets/component-1.png" alt="logo" width="125" height="75"/>
-    <ul>
+  <section >
+    <ul class="navigation-bar">
+      <li>
+        <img @click="homePageNavigation()" class="logo" src="../assets/component-1.png" alt="logo" width="125" height="75"/>
+      </li>
       <li @click="navigateCategoriesPages">Catégories</li>  
       <li @click="goToPage"> Todos List</li>
       <li @click="goToCounterPage">Counter</li>
@@ -37,6 +39,8 @@ export default {
     bottom: 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    width: 90vw;
     padding: 2rem;
   }
   ul {

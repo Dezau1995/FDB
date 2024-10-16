@@ -3,6 +3,7 @@ import cors from "cors";
 import { dataSource } from "./config/db";
 import exercicesRouter from "./router/exercices/router";
 import categoryRouter from "./router/category/router";
+import usersRouter from "./router/users/router";
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 
 app.use("/exercices", exercicesRouter);
 app.use("/categories", categoryRouter);
+app.use("/users", usersRouter);
 
 app.listen(port, async () => {
   await dataSource.initialize();

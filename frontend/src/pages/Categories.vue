@@ -1,13 +1,14 @@
 <template>
   <section>
     <h1>Hello World !</h1>
-    <label for="exercices-select"> Choisir une catégorie</label>
-      <select name="exercices" id="exercices-select">
+    <label for="categories-select"> Choisir une catégorie
+      <select name="categories" id="categories-select">
         <option value="">--Choissez une catégorie--</option>
         <option v-for="category in categoriesData" :key="category.id" :value="category.name">
       {{ category.name }}
         </option>
       </select>
+    </label>
   </section>
 </template>
 
