@@ -64,6 +64,7 @@ setup () {
       const response = await axios.get(`http://localhost:3001/exercices/${exerciceId}`)
       if(response.status === 200) {
         exerciceDetailsData.value = response.data;
+        console.log("ICI", response.data)
       } else {
         console.error('Erreur dans la réponse', response.status);
       }
@@ -135,8 +136,8 @@ setup () {
 }
 
 .icon-trash {
-  width: 100%;
-  color: white;
+  width: 40px;
+  height: 40px;
 }
 
 .display-exercice-details-form {
@@ -145,5 +146,12 @@ setup () {
   align-items: center;
 }
 
+@media (min-width: 1024px) {
+  .icon-trash {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  }
+}
 
 </style>

@@ -1,0 +1,15 @@
+GET http://localhost:3001/users/
+
+###
+
+POST http://localhost:3001/users/
+Content-Type: application/json
+
+{
+  "firstname": "Aude",
+  "lastname": "Sedillo",
+  "email": "dezau@gmail.com",
+  "password": "toto",
+  "picture": "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-man-avatar-with-circle-frame-vector-ilustration-png-image_6110328.png",
+  "exercicesId": "[4, 11]"
+}

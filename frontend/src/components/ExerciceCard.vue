@@ -8,6 +8,7 @@
 
 <script>
 export default {
+  name: 'exercice-card',
   props: {
     id: { type: Number, required: true},
     name : { type: String, required: true },

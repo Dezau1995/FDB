@@ -29,7 +29,7 @@ import ExerciceCard from '../components/ExerciceCard.vue';
 import { watch } from 'vue';
 
 export default {
-  name: "home-pages",
+  name:'home-pages',
   components: {
     ModalAddExerciceForm,
     ExerciceCard,

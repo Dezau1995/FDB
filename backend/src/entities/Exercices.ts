@@ -1,10 +1,12 @@
 import {
   BaseEntity,
   Column, Entity,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn
 } from "typeorm";
 import { Category } from "./Category";
+import { Users } from "./Users";
 
 @Entity()
 export class Exercices extends BaseEntity {
@@ -31,4 +33,7 @@ export class Exercices extends BaseEntity {
 
   @ManyToOne(() => Category, category => category.exercice)
   category!: Category;
+
+  @ManyToMany(() => Users, (user) => user.exercice)
+  user!: Users[];
 }

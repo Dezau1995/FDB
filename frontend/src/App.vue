@@ -27,18 +27,9 @@ export default {
 @import './css/reset.css';
 
 main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 1rem 0.5rem;
-}
-
-.logo {
-  cursor: pointer;
-  transition: all 1s ease-in-out;
-  border: 1px solid white;
-  border-radius: 10px;
-}
-
-.logo:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 10px 5px white;
 }
 </style>
