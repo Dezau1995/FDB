@@ -8,8 +8,20 @@ Content-Type: application/json
 {
   "firstname": "Aude",
   "lastname": "Sedillo",
-  "email": "dezau@gmail.com",
+  "email": "celia@gmail.com",
   "password": "toto",
   "picture": "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-man-avatar-with-circle-frame-vector-ilustration-png-image_6110328.png",
-  "exercicesId": "[4, 11]"
+  "exercicesId": "[4, 11]",
+  "role": ["client"]
+}
+
+###
+
+POST http://localhost:3001/users/login
+Content-Type: application/json
+
+{
+  "email": "celia@gmail.com",
+  "password": "toto",
+  "role": "[CLIENT]"
 }

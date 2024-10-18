@@ -41,13 +41,16 @@ export default {
 
 <style>
 .navigation-bar {
-    position: sticky;
-    bottom: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90vw;
-    padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100vw;
+  background-color: var(--background-color);
+  padding: 0.5rem;
+  border-radius: 10px;
   }
 
 ul {

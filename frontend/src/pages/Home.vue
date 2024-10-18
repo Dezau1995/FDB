@@ -16,6 +16,16 @@
     <p class="section-card">Mes programmes</p>
     <p class="section-card">Mes exercices</p>
     <p class="section-card">Évolution</p>
+    <p class="section-card">Mes exercices</p>
+    <p class="section-card">Évolution</p>
+    <p class="section-card">Mes exercices</p>
+    <p class="section-card">Évolution</p>
+    <p class="section-card">Mes exercices</p>
+    <p class="section-card">Évolution</p>
+    <p class="section-card">Mes exercices</p>
+    <p class="section-card">Évolution</p>
+    <p class="section-card">Mes exercices</p>
+    <p class="section-card">Évolution</p>
   </section>
   </main>
 </template>
@@ -107,9 +117,9 @@ export default {
 .section-card {
   border: 1px solid white;
   border-radius: 10px;
-  width: 40%;
-  padding: 2rem;
+  width: 30vw;
+  height: 15vh;
+  padding: 1rem;
   text-align: center;
-
 }
 </style>

@@ -7,7 +7,14 @@ import usersRouter from "./router/users/router";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: ["Authorization"],
+    origin: process.env.CLIENT_URL|| "http://localhost:3001",
+    credentials: true,
+  })
+);
 
 const port = 3001;
 

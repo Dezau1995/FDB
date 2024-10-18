@@ -1,16 +1,16 @@
 <template class="display-login-page">
   <h1>Connexion</h1>
-  <form class="display-form-login">
+  <form @submit.prevent="handleSubmit" class="display-form-login">
     <div class="form-login">
     <label>
       Email :
-      <input type="text" name="email" placeholder="john.doe@gmail.com"/>
+      <input type="text" name="email" v-model="email" placeholder="john.doe@gmail.com"/>
     </label>
   </div>
     <div class="form-login">
     <label>
       Password :
-      <input type="text" name="password" placeholder="******"/>
+      <input type="password" name="password" v-model="password" placeholder="******"/>
     </label>
   </div>
   <div class="form-login">
@@ -20,10 +20,36 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { ref } from 'vue';
+
 export default {
   name: 'login',
+  setup () {
+    const email = ref('');
+    const password = ref('');
 
+    const handleSubmit = async () => {
+      const response = await axios.post('http://localhost:3001/users/login', {
+      email: email.value,
+      password: password.value,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+ 
+        localStorage.setItem('authToken', response.headers['authorization']);
+    return response.data; // Renvoie les informations utilisateur
 }
+    return {
+      email,
+      password,
+      handleSubmit,
+    };
+  },
+};
 </script>
 
 <style>
