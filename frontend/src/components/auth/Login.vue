@@ -1,4 +1,5 @@
 <template class="display-login-page">
+  <section>
   <h1>Connexion</h1>
   <form @submit.prevent="handleSubmit" class="display-form-login">
     <div class="form-login">
@@ -6,7 +7,7 @@
       Email :
       <input type="text" name="email" v-model="email" placeholder="john.doe@gmail.com"/>
     </label>
-  </div>
+   </div>
     <div class="form-login">
     <label>
       Password :
@@ -17,36 +18,76 @@
   <button class="btn-login" type="submit">Connexion</button>
 </div>
   </form>
+  <section class="section-redirection-sign-in">
+  <p>Tu n'as pas encore de compte ?</p>
+  <p @click="goToSignIn" class="redirection-sign-in">Inscris toi !</p>
+</section>
+</section>
 </template>
 
 <script>
 import axios from 'axios';
 import { ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'login',
   setup () {
     const email = ref('');
     const password = ref('');
+    const router = useRouter();
+    const store = useStore();
 
+    // const handleSubmit = async () => {
+    //   const response = await axios.post('http://localhost:3001/users/login', {
+    //   email: email.value,
+    //   password: password.value,
+    //   role:['client']
+    // }, {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   credentials: "include",
+    // });
+    //     localStorage.setItem('authToken', response.headers['authorization']);
+    // return response.data;
+    // };
     const handleSubmit = async () => {
+      try {
       const response = await axios.post('http://localhost:3001/users/login', {
       email: email.value,
       password: password.value,
+      role:['client']
     }, {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
     });
+    console.log("data", response.data)
+    console.log("ICI", response)
+    if(response.status === 200) {
+      const token = response.headers['authorization'];
+      const result = response.data;
+      console.log("get user", result.user)
+      store.dispatch('fetchLoggedUser', result.user.id);
+      router.push('/')
+    } else {
+      console.error('Login échoué');
+    }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
- 
-        localStorage.setItem('authToken', response.headers['authorization']);
-    return response.data; // Renvoie les informations utilisateur
-}
+    const goToSignIn = () => router.push('/signin');
+
     return {
       email,
       password,
       handleSubmit,
+      goToSignIn,
     };
   },
 };
@@ -73,8 +114,18 @@ export default {
   margin: 0.25rem;
 }
 
-.btn-login{
+.btn-login {
   border-radius: 5px;
+  cursor: pointer;
 }
 
+.section-redirection-sign-in {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.redirection-sign-in {
+  color: var(--details-color);
+  cursor: pointer;
+}
 </style>

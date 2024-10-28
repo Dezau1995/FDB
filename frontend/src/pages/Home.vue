@@ -16,27 +16,17 @@
     <p class="section-card">Mes programmes</p>
     <p class="section-card">Mes exercices</p>
     <p class="section-card">Évolution</p>
-    <p class="section-card">Mes exercices</p>
-    <p class="section-card">Évolution</p>
-    <p class="section-card">Mes exercices</p>
-    <p class="section-card">Évolution</p>
-    <p class="section-card">Mes exercices</p>
-    <p class="section-card">Évolution</p>
-    <p class="section-card">Mes exercices</p>
-    <p class="section-card">Évolution</p>
-    <p class="section-card">Mes exercices</p>
-    <p class="section-card">Évolution</p>
   </section>
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
-import { ref, onMounted, onUpdated } from 'vue';
+import { ref, onMounted, watch  } from 'vue';
 import { useRouter } from 'vue-router';
+import { Exercice } from '../types/Exercice';
 import ModalAddExerciceForm from '../components/ModalAddExerciceForm.vue';
 import ExerciceCard from '../components/ExerciceCard.vue';
-import { watch } from 'vue';
 
 export default {
   name:'home-pages',
@@ -45,7 +35,7 @@ export default {
     ExerciceCard,
   },
   setup() {
-    const exercicesData = ref([]);
+    const exercicesData = ref<Exercice[]>([]);
     const openModalAddExercice = ref(false);
     const router = useRouter();
 

@@ -3,7 +3,7 @@
     <button class="btn-trash" @click="handleDelete">
       <img class="icon-trash" src="../assets/icon-trash.png" alt="trash">
     </button>
-    <form @submit="handleSubmit" class="display-exercice-details-form">
+    <form @submit.prevent="handleSubmit" class="display-exercice-details-form">
       <h1 v-if="!edit">{{ exerciceDetailsData.name }}</h1>
       <label v-else>
         Nom de l'exercice :
@@ -12,7 +12,7 @@
       <p v-if="!edit">{{ exerciceDetailsData.description }}</p>
       <label v-else>
         Description:
-        <input type="text" :value="exerciceDetailsData.descritpion" name="description">
+        <input type="text" :value="exerciceDetailsData.description" name="description">
       </label>
       <p v-if="!edit">{{ exerciceDetailsData.difficulty }}</p>
       <label v-else>
@@ -36,18 +36,18 @@
 </section>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import { Exercice } from '../types/Exercice';
 
 export default {
 name: 'exercice-details',
 setup () {
-  const error = ref(null);
-  const exerciceDetailsData = ref({});
+  const exerciceDetailsData = ref<Partial<Exercice>>({});
   const route = useRoute();
   const router = useRouter();
   const exerciceId = route.params.exerciceId;
@@ -61,7 +61,7 @@ setup () {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/exercices/${exerciceId}`)
+      const response = await axios.get<Exercice>(`http://localhost:3001/exercices/${exerciceId}`)
       if(response.status === 200) {
         exerciceDetailsData.value = response.data;
         console.log("ICI", response.data)
@@ -69,22 +69,30 @@ setup () {
         console.error('Erreur dans la réponse', response.status);
       }
     } catch (error) {
-      error.value = 'Erreur lors de la récupération des données';
+      console.error('Erreur lors de la récupération des données', error);
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: Event) => {
     e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    const formJson = Object.fromEntries(formData.entries());
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form as HTMLFormElement);
+    // const formJson = Object.fromEntries(formData.entries());
+
+      // Créez un objet vide pour stocker les données du formulaire
+  const formJson: Record<string, any> = {};
+  
+  // Remplissez l'objet avec les données du FormData
+  formData.forEach((value, key) => {
+    formJson[key] = value;
+  });
     try {
       await axios.put(`http://localhost:3001/exercices/${exerciceId}`, formJson);
       edit.value = false;
       btnValue.value = "Éditer";
       toast.success("Vos modifications ont bien été prises en compte !", {
       "theme": "dark",
-      "type": "default",
+      // "type": "default",
       "autoClose": 1500,
       "transition": "slide",
       "dangerouslyHTMLString": true
@@ -110,7 +118,6 @@ setup () {
     edit,
     handleBtnValue,
     exerciceDetailsData,
-    error,
     handleSubmit,
     handleDelete,
   }

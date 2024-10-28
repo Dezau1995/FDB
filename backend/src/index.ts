@@ -7,14 +7,19 @@ import usersRouter from "./router/users/router";
 
 const app = express();
 app.use(express.json());
-// app.use(cors());
-app.use(
-  cors({
-    exposedHeaders: ["Authorization"],
-    origin: process.env.CLIENT_URL|| "http://localhost:3001",
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: 'http://localhost:5173', // Spécifie l'origine autorisée
+  credentials: true, // Permet l'envoi des cookies et des informations d'identification
+  allowedHeaders: [
+      'accept-language', 
+      'accept-encoding', 
+      'access-control-request-headers', 
+      'x-access-token',
+      'Content-Type' // Ajoute ce header si tu envoies des données JSON
+  ]
+}));
+
+app.use(express.json());
 
 const port = 3001;
 

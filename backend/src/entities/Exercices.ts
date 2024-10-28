@@ -20,7 +20,7 @@ export class Exercices extends BaseEntity {
   description!: string;
   
   @Column()
-  difficulty!: String;
+  difficulty!: string;
 
   @Column()
   time!: string;
