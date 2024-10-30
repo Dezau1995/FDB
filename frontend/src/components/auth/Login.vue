@@ -1,5 +1,5 @@
-<template class="display-login-page">
-  <section>
+<template>
+  <section class="display-login-page">
   <h1>Connexion</h1>
   <form @submit.prevent="handleSubmit" class="display-form-login">
     <div class="form-login">
@@ -81,7 +81,9 @@ export default {
 <style>
 .display-login-page {
  display: flex;
+ flex-direction: column;
  justify-content: center;
+ align-items: center;
 }
 
 .display-form-login {
