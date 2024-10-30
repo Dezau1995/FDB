@@ -5,6 +5,7 @@ import ExerciceDetails from "./pages/ExercicesDetails.vue";
 import Todos from "./components/Todos.vue";
 import FirstTest from "./components/FirstTest.vue";
 import Login from "./components/auth/Login.vue";
+import CreateAccount from "./components/auth/CreateAccount.vue";
 
 const routes = [
     {path: '/', component: Home},
@@ -13,6 +14,7 @@ const routes = [
     {path: '/categories', component: Categories, meta: { requiresAuth: true }},
     {path: `/:exerciceId`, component: ExerciceDetails, meta: { requiresAuth: true }},
     {path: '/login', component: Login},
+    {path: '/signin', component: CreateAccount},
 ];
 
 const router = createRouter({history: createWebHistory(), routes})
