@@ -47,10 +47,11 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  width: 100vw;
+  /* width: 100vw; */
   background-color: var(--background-color);
   padding: 0.5rem;
   border-radius: 10px;
+  box-shadow: 0 0 15px 0 black;
   }
 
 ul {

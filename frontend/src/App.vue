@@ -30,6 +30,6 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1rem 0.5rem;
+  margin: 2rem 0.25rem;
 }
 </style>

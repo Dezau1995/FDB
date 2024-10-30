@@ -12,15 +12,15 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
+import { Category } from '../types/Category';
 
 export default {
   name: "exercices-pages",
   setup() {
-    const error = ref(null);
-    const categoriesData = ref([]);
+    const categoriesData = ref<Category[]>([]);
 
     const fetchData = async () => {
       try {
@@ -31,7 +31,7 @@ export default {
            console.error('Erreur dans la réponse', response.status);
         }
       } catch (error) {
-        error.value = 'Erreur lors de la récupération des données';
+        console.error('Erreur lors de la récupération des données', error)
       }
     };
 
@@ -41,7 +41,6 @@ export default {
 
     return {
       categoriesData,
-      error
     };
   },
 };

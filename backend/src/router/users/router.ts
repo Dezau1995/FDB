@@ -20,6 +20,18 @@ usersRouter.get("/", async (req, res) => {
   }
 });
 
+usersRouter.get("/:id", async (req, res) => {
+  try {
+   const id = parseInt(req.params.id)
+   const user = await Users.findOne({
+     where: {id},
+   });
+   res.status(200).send(user)
+  } catch (error) {
+   return res.status(500).send(error);
+  }
+});
+
 usersRouter.post("/", async (req, res) => {
   const { firstname, lastname, email, password, picture, role, exercicesId } = req.body;
   try {

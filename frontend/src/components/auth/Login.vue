@@ -39,20 +39,6 @@ export default {
     const router = useRouter();
     const store = useStore();
 
-    // const handleSubmit = async () => {
-    //   const response = await axios.post('http://localhost:3001/users/login', {
-    //   email: email.value,
-    //   password: password.value,
-    //   role:['client']
-    // }, {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   credentials: "include",
-    // });
-    //     localStorage.setItem('authToken', response.headers['authorization']);
-    // return response.data;
-    // };
     const handleSubmit = async () => {
       try {
       const response = await axios.post('http://localhost:3001/users/login', {
@@ -65,10 +51,9 @@ export default {
       },
       withCredentials: true,
     });
-    console.log("data", response.data)
-    console.log("ICI", response)
+
     if(response.status === 200) {
-      const token = response.headers['authorization'];
+      // const token = response.headers['authorization'];
       const result = response.data;
       console.log("get user", result.user)
       store.dispatch('fetchLoggedUser', result.user.id);

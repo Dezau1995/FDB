@@ -105,11 +105,13 @@ export default {
 }
 
 .section-card {
+  display: flex;
   border: 1px solid white;
   border-radius: 10px;
   width: 30vw;
   height: 15vh;
   padding: 1rem;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 </style>

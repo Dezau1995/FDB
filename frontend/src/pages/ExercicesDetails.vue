@@ -79,13 +79,12 @@ setup () {
     const formData = new FormData(form as HTMLFormElement);
     // const formJson = Object.fromEntries(formData.entries());
 
-      // Créez un objet vide pour stocker les données du formulaire
-  const formJson: Record<string, any> = {};
+    const formJson: Record<string, any> = {};
   
   // Remplissez l'objet avec les données du FormData
-  formData.forEach((value, key) => {
-    formJson[key] = value;
-  });
+    formData.forEach((value, key) => {
+      formJson[key] = value;
+    });
     try {
       await axios.put(`http://localhost:3001/exercices/${exerciceId}`, formJson);
       edit.value = false;

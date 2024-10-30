@@ -8,20 +8,17 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     
-    
-    /* Autoriser le JavaScript */
     "allowJs": true,
     "checkJs": true,
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "preserve",
 
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
