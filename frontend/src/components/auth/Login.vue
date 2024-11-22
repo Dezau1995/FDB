@@ -5,7 +5,7 @@
     <div class="form-login">
     <label>
       Email :
-      <input type="text" name="email" v-model="email" placeholder="john.doe@gmail.com"/>
+      <input type="email" name="email" v-model="email" placeholder="john.doe@gmail.com"/>
     </label>
    </div>
     <div class="form-login">
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -40,30 +39,7 @@ export default {
     const store = useStore();
 
     const handleSubmit = async () => {
-      try {
-      const response = await axios.post('http://localhost:3001/users/login', {
-      email: email.value,
-      password: password.value,
-      role:['client']
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    });
-
-    if(response.status === 200) {
-      // const token = response.headers['authorization'];
-      const result = response.data;
-      console.log("get user", result.user)
-      store.dispatch('fetchLoggedUser', result.user.id);
-      router.push('/')
-    } else {
-      console.error('Login échoué');
-    }
-      } catch (error) {
-        console.error(error);
-      }
+      await store.dispatch('login', { email: email.value, password: password.value})
     };
 
     const goToSignIn = () => router.push('/signin');

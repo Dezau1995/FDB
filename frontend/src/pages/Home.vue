@@ -44,7 +44,6 @@ export default {
         const response = await axios.get(`http://localhost:3001/exercices/`);
         if (response.status === 200) {
           exercicesData.value = response.data;
-          console.log(response.data)
         } else {
           console.error('Erreur dans la réponse', response.status);
         }
