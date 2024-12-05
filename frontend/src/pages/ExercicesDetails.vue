@@ -3,68 +3,48 @@
     <button class="btn-trash" @click="handleDelete">
       <img class="icon-trash" src="../assets/icon-trash.png" alt="trash">
     </button>
-    <form @submit.prevent="handleSubmit" class="display-exercice-details-form">
-      <h1 v-if="!edit">{{ exerciceDetailsData.name }}</h1>
-      <label v-else>
-        Nom de l'exercice :
-        <input type="text" :value="exerciceDetailsData.name" name="name">
-      </label>
-      <p v-if="!edit">{{ exerciceDetailsData.description }}</p>
-      <label v-else>
-        Description:
-        <input type="text" :value="exerciceDetailsData.description" name="description">
-      </label>
-      <p v-if="!edit">{{ exerciceDetailsData.difficulty }}</p>
-      <label v-else>
-        Difficulté :
-        <input type="text" :value="exerciceDetailsData.difficulty" name="difficulty">
-      </label>
-      <p v-if="!edit">{{ exerciceDetailsData.time }}</p>
-      <label v-else>
-        Temps :
-        <input type="text" :value="exerciceDetailsData.time" name="time">
-      </label>
-      <p v-if="!edit">{{ exerciceDetailsData.repetitions }}</p>
-      <label v-else>
-        Nombre de répétitions :
-        <input type="text" :value="exerciceDetailsData.repetitions" name="repetitions">
-      </label>
-      <p>{{ exerciceDetailsData.category }}</p>
-    <button type="submit" v-if="edit">{{ btnValue }}</button>
-  </form>
-  <button type="button" @click="handleBtnValue" v-if="!edit">{{btnValue}}</button>
-</section>
+      <h1>{{ exerciceData.name }}</h1>
+      <p>{{ exerciceData.description }}</p>
+      <p>{{ exerciceData.difficulty }}</p>
+      <p>{{ exerciceData.time }}</p>
+      <p>{{ exerciceData.repetitions }}</p>
+      <p>{{ exerciceData.category?.name }}</p>
+      <button type="button" @click="handleEditionExercice">Éditer</button>
+    <edition-exercice-modal :exerciceData="exerciceData" :isOpen="openEditionModalExercice" @close="openEditionModalExercice = false"
+    @fetch-data="fetchData"/>
+  </section>
 </template>
 
 <script lang="ts">
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
 import { Exercice } from '../types/Exercice';
+import ExerciceEditionModal from '../components/ExerciceEditionModal.vue';
 
 export default {
 name: 'exercice-details',
-setup () {
-  const exerciceDetailsData = ref<Partial<Exercice>>({});
+components: {
+  'edition-exercice-modal': ExerciceEditionModal,
+},
+emits: ['update-data'],
+setup (_, { emit }) {
+  const exerciceData = ref<Partial<Exercice>>({});
   const route = useRoute();
   const router = useRouter();
   const exerciceId = route.params.exerciceId;
-  const edit = ref(false);
-  const btnValue = ref("Éditer");
+  const openEditionModalExercice = ref(false);
 
-  const handleBtnValue = () => {
-    edit.value = !edit.value;
-    btnValue.value = edit.value ? "Envoyer" : "Éditer" ;
-  };
+  const handleEditionExercice = () => {
+    openEditionModalExercice.value = true;
+  }
 
   const fetchData = async () => {
     try {
       const response = await axios.get<Exercice>(`http://localhost:3001/exercices/${exerciceId}`)
       if(response.status === 200) {
-        exerciceDetailsData.value = response.data;
-        console.log("ICI", response.data)
+        exerciceData.value = response.data;
+        console.log('data exercice', exerciceData.value)
       } else {
         console.error('Erreur dans la réponse', response.status);
       }
@@ -73,39 +53,14 @@ setup () {
     }
   };
 
-  const handleSubmit = async (e: Event) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form as HTMLFormElement);
-    // const formJson = Object.fromEntries(formData.entries());
-
-    const formJson: Record<string, any> = {};
-  
-  // Remplissez l'objet avec les données du FormData
-    formData.forEach((value, key) => {
-      formJson[key] = value;
-    });
-    try {
-      await axios.put(`http://localhost:3001/exercices/${exerciceId}`, formJson);
-      edit.value = false;
-      btnValue.value = "Éditer";
-      toast.success("Vos modifications ont bien été prises en compte !", {
-      "theme": "dark",
-      // "type": "default",
-      "autoClose": 1500,
-      "transition": "slide",
-      "dangerouslyHTMLString": true
-      });
-      await fetchData();
-    } catch (error) {
-      console.error("Erreur lors de la modification du produit:", error);
-      toast.error("Erreur lors de la modification du produit");
-    }
-  };
-
+  console.log('fetch data', fetchData)
   const handleDelete = async () => {
-    await axios.delete(`http://localhost:3001/exercices/${exerciceId}`)
+    await axios.delete(`http://localhost:3001/exercices/${exerciceId}`);
     router.push("/")
+  }
+
+  const refreshData = () => {
+    emit('update-data')
   }
 
   onMounted(() => {
@@ -113,12 +68,14 @@ setup () {
   });
 
   return {
-    btnValue,
-    edit,
-    handleBtnValue,
-    exerciceDetailsData,
-    handleSubmit,
+    // Data
+    exerciceData,
+    openEditionModalExercice,
+    // Method
+    handleEditionExercice,
     handleDelete,
+    fetchData,
+    refreshData,
   }
 }
 }

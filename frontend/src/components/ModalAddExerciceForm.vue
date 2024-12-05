@@ -1,5 +1,5 @@
 <template>
-  <dialog class="display-modal-add-exercice" v-if="isOpen" @close="closeModal">
+  <dialog class="display-modal-add-exercice" v-if="isOpen" @close="closeModal" @update-data="refreshData">
     <button type="button" @click="closeModal" class="close-form-modal">Annuler</button>
     <form @submit.prevent="handleSubmit" class="display-add-exercice-form">
       <div class="input-container"> 
@@ -39,16 +39,10 @@
       </label>
     </div>
     <div class="input-container">
-      <label>
-        Créer :
-        <input type="text" name="createdAt" />
-      </label>
-    </div>
-    <div class="input-container">
       <label> Catégorie
-      <select name="categories" id="categories-select">
-        <option value="">--Choissez une catégorie--</option>
-        <option v-for="category in categoriesData" :key="category.id" :value="category.name">
+      <select name="categoryId" id="category-select">
+        <option value="Choose a category">--Choissez une catégorie--</option>
+        <option v-for="category in categoriesData" :key="category.id" :value="category.id">
       {{ category.name }}
         </option>
       </select>
@@ -59,30 +53,32 @@
   </dialog>
 </template>
 
-<script>
+<script lang="ts" >
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import { Category } from '../types/Category';
 
 export default {
   name: 'add-exercice',
   props: {
     isOpen: { type: Boolean, required: true },
   },
-  emits: ['close'],
+  emits: ['close', 'update-data'],
   setup(_, { emit }) {
-    const error = ref(null);
-    const categoriesData = ref([]);
+    const categoriesData = ref<Partial<Category[]>>([]);
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
-      const formJson = Object.fromEntries(formData.entries());
+    const handleSubmit = async (e: Event) => {
+      const form= e.target;
+      const formData = new FormData(form as HTMLFormElement);
+      const formJson = (Object as any).fromEntries((formData as any).entries()) as Record<string, number>;
+      try {
+        await axios.post(`http://localhost:3001/exercices/`, formJson);
+        emit('close');
+        emit('update-data');
+      } catch (error) {
+        console.log('Erreur lors de l\'ajout de l\'exercice', error)
+      }
 
-      axios.post(`http://localhost:3001/exercices/`, formJson)
-        .then(() => {
-          emit('close');
-        });
     };
 
     const fetchData = async () => {
@@ -94,7 +90,7 @@ export default {
            console.error('Erreur dans la réponse', response.status);
         }
       } catch (error) {
-        error.value = 'Erreur lors de la récupération des données';
+        console.error("Erreur lors de la récupération des données", error);
       }
     };
 
@@ -106,11 +102,17 @@ export default {
       emit('close');
     };
 
+    const refreshData = () => {
+      emit('update-data')
+    }
+
     return {
+      // Data
+      categoriesData,
+      // Method
       handleSubmit,
       closeModal,
-      categoriesData,
-      error
+      refreshData,
     };
   }
 }

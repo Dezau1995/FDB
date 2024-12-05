@@ -1,5 +1,6 @@
 import {
   BaseEntity,
+  BeforeInsert,
   Column, Entity,
   ManyToMany,
   ManyToOne,
@@ -29,7 +30,12 @@ export class Exercices extends BaseEntity {
   repetitions!: string;
 
   @Column()
-  createdAt!: string;
+  createdAt!: Date;
+
+  @BeforeInsert()
+  updateDates() {
+    this.createdAt = new Date();
+  }
 
   @ManyToOne(() => Category, category => category.exercice)
   category!: Category;

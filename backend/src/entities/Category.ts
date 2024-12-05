@@ -1,7 +1,7 @@
 import {
   BaseEntity,
   Column, Entity,
-  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
 import { Exercices } from "./Exercices";
@@ -14,6 +14,6 @@ export class Category extends BaseEntity {
   @Column()
   name!: string;
 
-  @ManyToMany(() => Exercices, (exercice) => exercice.category)
+  @OneToMany(() => Exercices, (exercice) => exercice.category)
   exercice!: Exercices[];
 }

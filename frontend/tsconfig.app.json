@@ -11,6 +11,7 @@
     "allowJs": true,
     "checkJs": true,
 
+    "types": ["vuex"],
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,

@@ -3,14 +3,12 @@
     <h1>Exos du jour</h1>
     <section class="display-exercices">
       <router-link class="router-link" v-for="exercice in exercicesData" :key="exercice.id" :to="`/${exercice.id}`">
-        <exercice-card :id="exercice.id" :name="exercice.name" :difficulty="exercice.difficulty" :category="exercice.category?.name"/>
+        <exercice-card :id="exercice.id" :name="exercice.name" :difficulty="exercice.difficulty" :category="exercice.category?.name"
+        @update-data="fetchData"/>
       </router-link>
       </section>
     <button @click="handleOpenModal">Ajouter un exercice</button>
-    <modal-add-exercice-form 
-      :isOpen="openModalAddExercice" 
-      @close="openModalAddExercice = false" 
-    />
+    <modal-add-exercice-form :isOpen="openModalAddExercice" @close="openModalAddExercice = false" @update-data="fetchData"/>
     <section class="display-cards">
     <p class="section-card">Séance du jour</p>
     <p class="section-card">Mes programmes</p>
@@ -22,8 +20,7 @@
 
 <script lang="ts">
 import axios from 'axios';
-import { ref, onMounted, watch  } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted  } from 'vue';
 import { Exercice } from '../types/Exercice';
 import ModalAddExerciceForm from '../components/ModalAddExerciceForm.vue';
 import ExerciceCard from '../components/ExerciceCard.vue';
@@ -37,7 +34,6 @@ export default {
   setup() {
     const exercicesData = ref<Exercice[]>([]);
     const openModalAddExercice = ref(false);
-    const router = useRouter();
 
     const fetchData = async () => {
       try {
@@ -56,18 +52,16 @@ export default {
       fetchData();
     });
 
-    watch(router.currentRoute, () => {
-      fetchData();
-    });
-
     const handleOpenModal = () => {
       openModalAddExercice.value = true;
     };
+
 
     return {
       exercicesData,
       openModalAddExercice,
       handleOpenModal,
+      fetchData,
     };
   },
 };

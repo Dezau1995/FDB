@@ -62,16 +62,15 @@ exercicesRouter.post("/", async (req, res) => {
 });
 
 exercicesRouter.put("/:id", async (req, res) => {
-  const {
-    name, description, difficulty, time, repetitions, createdAt, categoryId
-  } = req.body;
+  console.log('back', req.body);
+  const { name, description, difficulty, time, repetitions, createdAt, categoryId } = req.body;
   try {
     const id = parseInt(req.params.id);
     const exercice = await Exercices.findOne({
       relations: {
         category: true,
       },
-      where: {id},
+      where: { id },
     });
     if (exercice !== null) {
       exercice.name = name;
@@ -83,6 +82,7 @@ exercicesRouter.put("/:id", async (req, res) => {
   
       if (categoryId) {
         const [category] = await Category.find({ where: {id: categoryId}});
+        console.log('in cate', category, categoryId)
         if (category) exercice.category = category;
       }
   
@@ -99,7 +99,7 @@ exercicesRouter.delete("/:id", async (req, res) => {
     const id = parseInt(req.params.id);
     const exercice = await Exercices.findOne({where : {id}});
     if(exercice !== null) {
-      exercice.remove();
+      await exercice.remove();
     }
     res.status(200).send("OK");
   } catch (error) {

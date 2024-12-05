@@ -1,3 +1,5 @@
+import { Category } from './Category';
+
 export type Exercice = {
   id: number;
   name: string;
@@ -6,9 +8,5 @@ export type Exercice = {
   time: string;
   repetitions: string;
   createdAt: string;
-  category: {
-    id: number;
-    name: string;
-  };
-  user: [];
+  category: Category[];
 }
